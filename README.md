@@ -4,6 +4,9 @@
 | Koncept   | En moderne tattoo shop med fokus på portfolio og salg.       |
 | Målgruppe | Folk der søger kunstneriske tattoos og relaterede produkter. |
 
+> [!WARNING]
+> Dette er et eksamensprojekt. Koden er til undervisningsformål og er ikke optimeret til produktionsbrug.
+
 # Projektbeskrivelse
 
 > [!NOTE]
