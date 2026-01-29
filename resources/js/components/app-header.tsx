@@ -30,7 +30,7 @@ import { UserMenuContent } from '@/components/user-menu-content';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useInitials } from '@/hooks/use-initials';
 import { cn, toUrl } from '@/lib/utils';
-import { dashboard } from '@/routes';
+import { profile } from '@/routes';
 import type { BreadcrumbItem, NavItem, SharedData } from '@/types';
 
 type Props = {
@@ -40,7 +40,7 @@ type Props = {
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: dashboard(),
+        href: profile(),
         icon: LayoutGrid,
     },
 ];
