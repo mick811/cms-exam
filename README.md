@@ -1,121 +1,121 @@
-| Title     | Eksamensprojekt: CMS Forløb                                  |
+| title     | eksamensprojekt: cms forløb                                  |
 | --------- | ------------------------------------------------------------ |
-| Kunde     | Tattoo Shop                                                  |
-| Koncept   | En moderne tattoo shop med fokus på portfolio og salg.       |
-| Målgruppe | Folk der søger kunstneriske tattoos og relaterede produkter. |
+| kunde     | tattoo shop                                                  |
+| koncept   | en moderne tattoo shop med fokus på portfolio og salg.       |
+| målgruppe | folk der søger kunstneriske tattoos og relaterede produkter. |
 
-> [!WARNING]
-> Dette er et eksamensprojekt. Koden er til undervisningsformål og er ikke optimeret til produktionsbrug.
+> [!warning]
+> dette er et eksamensprojekt. koden er til undervisningsformål og er ikke optimeret til produktionsbrug.
 
-# Projektbeskrivelse
+# projektbeskrivelse
 
-> [!NOTE]
-> Strapi-typer (`strapi/types/generated/`) er ignoreret i git, da de genereres automatisk.
-> For at undgå TypeScript-fejl og sikre opdaterede typer skal Strapi køres lokalt første gang:
+> [!note]
+> strapi-typer (`strapi/types/generated/`) er ignoreret i git, da de genereres automatisk.
+> for at undgå typescript-fejl og sikre opdaterede typer skal strapi køres lokalt første gang:
 > `cd strapi && bun develop`
 
-Dette projekt løser "Mulighed 1" i CMS-opgaven. Sitet er bygget som en Headless løsning til en fiktiv tattoo shop. Sitet er en SSR side bygget i Laravel, som får sin data fra Strapi, der fungerer som Headless CMS.
+dette projekt løser "mulighed 1" i cms-opgaven. sitet er bygget som en headless løsning til en fiktiv tattoo shop. sitet er en ssr side bygget i laravel, som får sin data fra strapi, der fungerer som headless cms.
 
-## Spec liste
+## spec liste
 
-### Fase 1: Setup & CMS
+### fase 1: setup & cms
 
-- [x] Projektstruktur og dokumentation
-- [x] README.md med oversigt, features, tech stack
-- [x] .env med Strapi URL og token
-- [ ] Hero indholdstype i Strapi
-- [ ] PortfolioItem indholdstype i Strapi
-- [ ] Product indholdstype i Strapi
-- [ ] About indholdstype i Strapi
-- [ ] Eksempeldata i Strapi
-- [ ] StrapiService med Hero, Portfolio, Product, About
-- [ ] Strapi image URL helper
+- [x] projektstruktur og dokumentation
+- [x] readme.md med oversigt, features, tech stack
+- [x] .env med strapi url og token
+- [ ] hero indholdstype i strapi
+- [ ] portfolioitem indholdstype i strapi
+- [ ] product indholdstype i strapi
+- [ ] about indholdstype i strapi
+- [ ] eksempeldata i strapi
+- [ ] strapiservice med hero, portfolio, product, about
+- [ ] strapi image url helper
 
-### Fase 2: Components
+### fase 2: components
 
-- [x] Layout component
-- [ ] Header component
-- [ ] Footer component
-- [x] Button component
-- [x] Card component
-- [x] Input, Textarea, Label components
-- [ ] Image component
+- [x] layout component
+- [ ] header component
+- [ ] footer component
+- [x] button component
+- [x] card component
+- [x] input, textarea, label components
+- [ ] image component
 
-### Fase 3: Pages
+### fase 3: pages
 
-- [ ] HomePage
-- [ ] FeaturedPortfolio component
-- [ ] PortfolioPage
-- [ ] ProductCard og ProductGrid
-- [ ] ProductsPage
-- [ ] PricingPage
-- [ ] FAQPage
-- [ ] TestimonialsPage
-- [ ] ContactPage
-- [ ] AboutPage
+- [ ] home page
+- [ ] featured portfolio
+- [ ] portfolio page
+- [ ] product card og grid
+- [ ] products page
+- [ ] pricing page
+- [ ] faq page
+- [ ] testimonials page
+- [ ] contact page
+- [ ] about page
 
-### Fase 4: Polish
+### fase 4: polish
 
-- [x] Loading states (skeleton)
-- [ ] Error states og fallback UI
-- [ ] Mobile responsive
-- [ ] Page transition animationer
+- [x] loading states (skeleton)
+- [ ] error states og fallback ui
+- [ ] mobile responsive
+- [ ] page transition animationer
 
-### Fase 5: Testing & Quality
+### fase 5: testing & quality
 
-- [ ] Feature test: HomePage loading
-- [ ] Feature test: PortfolioPage accessibility
-- [ ] Feature test: Contact form validation
-- [ ] ESLint fix
-- [ ] Pint fix
-- [ ] Kør tests
-- [ ] Build production assets
+- [ ] feature test: homepage loading
+- [ ] feature test: portfolio page accessibility
+- [ ] feature test: contact form validation
+- [ ] eslint fix
+- [ ] pint fix
+- [ ] kør tests
+- [ ] build production assets
 
-### Fase 6: Documentation
+### fase 6: documentation
 
-- [ ] Screenshots
-- [ ] Dokumentation
+- [ ] screenshots
+- [ ] dokumentation
 
-## Tech Stack
+## tech stack
 
-- Laravel 12 (PHP 8.2+)
-- Inertia v2 med SSR
-- React 19
-- Tailwind CSS v4
-- Vite
-- Strapi som Headless CMS
-- Bun som package manager
-- Laravel Fortify til authentication
+- laravel 12 (php 8.2+)
+- inertia v2 med ssr
+- react 19
+- tailwind css v4
+- vite
+- strapi som headless cms
+- bun som package manager
+- laravel fortify til authentication
 - shadcn/ui components
 
-## Setup
+## setup
 
 ```bash
-# Installer dependencies
+# installer dependencies
 composer install
 npm install
 
-# Kopier .env og generer key
+# kopier .env og generer key
 cp .env.example .env
 php artisan key:generate
 
-# Kør Strapi (i separate terminal)
+# kør strapi (i separate terminal)
 cd strapi && bun develop
 
-# Kør dev server
+# kør dev server
 composer run dev
 ```
 
-## Tests
+## tests
 
 ```bash
-# Kør alle tests
+# kør alle tests
 php artisan test
 
-# Kør kun feature tests med filter
-php artisan test --compact tests/Feature/DashboardTest.php
+# kør kun feature tests med filter
+php artisan test --compact tests/feature/dashboardtest.php
 ```
 
-## Licens
+## licens
 
-MIT
+mit
