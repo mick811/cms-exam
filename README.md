@@ -20,61 +20,61 @@ Dette projekt løser "Mulighed 1" i CMS-opgaven. Sitet er bygget som en Headless
 
 ### Fase 1: Setup & CMS
 
-- [x] Set up project structure and documentation
-- [x] Create README.md with project overview, features, tech stack, setup instructions
-- [x] Update .env with Strapi URL and token for production
-- [ ] Strapi: Create Hero content type (headline, subtext, image, CTA text, CTA link)
-- [ ] Strapi: Create PortfolioItem content type (title, image, style/category, description)
-- [ ] Strapi: Create Product content type (name, image, price, description, category)
-- [ ] Strapi: Create About content type (title, body text, image, signature)
-- [ ] Strapi: Add sample data (3-5 portfolio items, 2-3 products, hero content)
-- [ ] Update StrapiService.php with methods for Hero, Portfolio, Product, About endpoints
-- [ ] Create Strapi image URL helper function to handle media assets
+- [x] Sæt projektstruktur og dokumentation op
+- [x] Opret README.md med projekt oversigt, features, tech stack, setup instruktioner
+- [x] Opdater .env med Strapi URL og token til produktion
+- [ ] Strapi: Opret Hero indholdstype (overskrift, undertekst, billede, CTA tekst, CTA link)
+- [ ] Strapi: Opret PortfolioItem indholdstype (titel, billede, stil/kategori, beskrivelse)
+- [ ] Strapi: Opret Product indholdstype (navn, billede, pris, beskrivelse, kategori)
+- [ ] Strapi: Opret About indholdstype (titel, brødtekst, billede, signatur)
+- [ ] Strapi: Tilføj eksempeldata (3-5 portfolio items, 2-3 produkter, hero indhold)
+- [ ] Opdater StrapiService.php med metoder til Hero, Portfolio, Product, About endpoints
+- [ ] Opret Strapi image URL helper funktion til media assets
 
 ### Fase 2: Components
 
-- [x] Create reusable Layout component with header and footer (app-layout.tsx)
-- [ ] Build responsive Header component with navigation menu
-- [ ] Build Footer component with contact info and social links
-- [x] Build Button component with variants (primary, secondary, outline, ghost)
-- [x] Build Card component for portfolio items and products
-- [x] Build Input, Textarea, Label components for forms
-- [ ] Build Image component with lazy loading and fallback
+- [x] Opret genbrugelig Layout component med header og footer (app-layout.tsx)
+- [ ] Byg responsiv Header component med navigationsmenu
+- [ ] Byg Footer component med kontaktinfo og sociale links
+- [x] Byg Button component med varianter (primary, secondary, outline, ghost)
+- [x] Byg Card component til portfolio items og produkter
+- [x] Byg Input, Textarea, Label components til forms
+- [ ] Byg Image component med lazy loading og fallback
 
 ### Fase 3: Pages
 
-- [ ] Build HomePage with hero section fetching from CMS
-- [ ] Build FeaturedPortfolio component for home page
-- [ ] Build PortfolioPage with full gallery grid
-- [ ] Build ProductCard and ProductGrid components
-- [ ] Build ProductsPage displaying all products
-- [ ] Build PricingPage with service list from CMS or static data
-- [ ] Build FAQPage with accordion component
-- [ ] Build TestimonialsPage with review cards
-- [ ] Build ContactPage with form (name, email, phone, message)
-- [ ] Build AboutPage with story and image
+- [ ] Byg HomePage med hero sektion der henter fra CMS
+- [ ] Byg FeaturedPortfolio component til home page
+- [ ] Byg PortfolioPage med fuldt galleri grid
+- [ ] Byg ProductCard og ProductGrid components
+- [ ] Byg ProductsPage der viser alle produkter
+- [ ] Byg PricingPage med service liste fra CMS eller statisk data
+- [ ] Byg FAQPage med accordion component
+- [ ] Byg TestimonialsPage med anmeldelseskort
+- [ ] Byg ContactPage med form (navn, email, telefon, besked)
+- [ ] Byg AboutPage med historie og billede
 
 ### Fase 4: Polish
 
-- [x] Add loading states (skeleton components) for async data (skeleton.tsx exists)
-- [ ] Add error states and fallback UI for failed data fetching
-- [ ] Ensure all pages are mobile responsive (test breakpoints)
-- [ ] Add page transition animations between routes
+- [x] Tilføj loading states (skeleton components) til asynkron data (skeleton.tsx eksisterer)
+- [ ] Tilføj error states og fallback UI til fejlede data fetches
+- [ ] Sørg for alle sider er mobile responsive (test breakpoints)
+- [ ] Tilføj side transition animationer mellem routes
 
 ### Fase 5: Testing & Quality
 
-- [ ] Write feature test for home page loading
-- [ ] Write feature test for portfolio page accessibility
-- [ ] Write feature test for contact form validation
-- [ ] Run lint:check and fix all ESLint errors
-- [ ] Run pint:check and fix all PHP style issues
-- [ ] Run full test suite and ensure all tests pass
-- [ ] Build production assets (npm run build)
+- [ ] Skriv feature test til home page loading
+- [ ] Skriv feature test til portfolio page accessibility
+- [ ] Skriv feature test til contact form validation
+- [ ] Kør lint:check og fix alle ESLint errors
+- [ ] Kør pint:check og fix alle PHP style issues
+- [ ] Kør fuld test suite og sikre alle tests passerer
+- [ ] Byg produktions assets (npm run build)
 
 ### Fase 6: Documentation
 
-- [ ] Take screenshots for documentation (home, portfolio, contact)
-- [ ] Write project documentation (features, CMS content types, setup guide)
+- [ ] Tag screenshots til dokumentation (home, portfolio, contact)
+- [ ] Skriv projekt dokumentation (features, CMS indholdstyper, setup guide)
 
 ## Tech Stack
 
