@@ -20,61 +20,61 @@ Dette projekt løser "Mulighed 1" i CMS-opgaven. Sitet er bygget som en Headless
 
 ### Fase 1: Setup & CMS
 
-- [x] Sæt projektstruktur og dokumentation op
-- [x] Opret README.md med projekt oversigt, features, tech stack, setup instruktioner
-- [x] Opdater .env med Strapi URL og token til produktion
-- [ ] Strapi: Opret Hero indholdstype (overskrift, undertekst, billede, CTA tekst, CTA link)
-- [ ] Strapi: Opret PortfolioItem indholdstype (titel, billede, stil/kategori, beskrivelse)
-- [ ] Strapi: Opret Product indholdstype (navn, billede, pris, beskrivelse, kategori)
-- [ ] Strapi: Opret About indholdstype (titel, brødtekst, billede, signatur)
-- [ ] Strapi: Tilføj eksempeldata (3-5 portfolio items, 2-3 produkter, hero indhold)
-- [ ] Opdater StrapiService.php med metoder til Hero, Portfolio, Product, About endpoints
-- [ ] Opret Strapi image URL helper funktion til media assets
+- [x] Projektstruktur og dokumentation
+- [x] README.md med oversigt, features, tech stack
+- [x] .env med Strapi URL og token
+- [ ] Hero indholdstype i Strapi
+- [ ] PortfolioItem indholdstype i Strapi
+- [ ] Product indholdstype i Strapi
+- [ ] About indholdstype i Strapi
+- [ ] Eksempeldata i Strapi
+- [ ] StrapiService med Hero, Portfolio, Product, About
+- [ ] Strapi image URL helper
 
 ### Fase 2: Components
 
-- [x] Opret genbrugelig Layout component med header og footer (app-layout.tsx)
-- [ ] Byg responsiv Header component med navigationsmenu
-- [ ] Byg Footer component med kontaktinfo og sociale links
-- [x] Byg Button component med varianter (primary, secondary, outline, ghost)
-- [x] Byg Card component til portfolio items og produkter
-- [x] Byg Input, Textarea, Label components til forms
-- [ ] Byg Image component med lazy loading og fallback
+- [x] Layout component
+- [ ] Header component
+- [ ] Footer component
+- [x] Button component
+- [x] Card component
+- [x] Input, Textarea, Label components
+- [ ] Image component
 
 ### Fase 3: Pages
 
-- [ ] Byg HomePage med hero sektion der henter fra CMS
-- [ ] Byg FeaturedPortfolio component til home page
-- [ ] Byg PortfolioPage med fuldt galleri grid
-- [ ] Byg ProductCard og ProductGrid components
-- [ ] Byg ProductsPage der viser alle produkter
-- [ ] Byg PricingPage med service liste fra CMS eller statisk data
-- [ ] Byg FAQPage med accordion component
-- [ ] Byg TestimonialsPage med anmeldelseskort
-- [ ] Byg ContactPage med form (navn, email, telefon, besked)
-- [ ] Byg AboutPage med historie og billede
+- [ ] HomePage
+- [ ] FeaturedPortfolio component
+- [ ] PortfolioPage
+- [ ] ProductCard og ProductGrid
+- [ ] ProductsPage
+- [ ] PricingPage
+- [ ] FAQPage
+- [ ] TestimonialsPage
+- [ ] ContactPage
+- [ ] AboutPage
 
 ### Fase 4: Polish
 
-- [x] Tilføj loading states (skeleton components) til asynkron data (skeleton.tsx eksisterer)
-- [ ] Tilføj error states og fallback UI til fejlede data fetches
-- [ ] Sørg for alle sider er mobile responsive (test breakpoints)
-- [ ] Tilføj side transition animationer mellem routes
+- [x] Loading states (skeleton)
+- [ ] Error states og fallback UI
+- [ ] Mobile responsive
+- [ ] Page transition animationer
 
 ### Fase 5: Testing & Quality
 
-- [ ] Skriv feature test til home page loading
-- [ ] Skriv feature test til portfolio page accessibility
-- [ ] Skriv feature test til contact form validation
-- [ ] Kør lint:check og fix alle ESLint errors
-- [ ] Kør pint:check og fix alle PHP style issues
-- [ ] Kør fuld test suite og sikre alle tests passerer
-- [ ] Byg produktions assets (npm run build)
+- [ ] Feature test: HomePage loading
+- [ ] Feature test: PortfolioPage accessibility
+- [ ] Feature test: Contact form validation
+- [ ] ESLint fix
+- [ ] Pint fix
+- [ ] Kør tests
+- [ ] Build production assets
 
 ### Fase 6: Documentation
 
-- [ ] Tag screenshots til dokumentation (home, portfolio, contact)
-- [ ] Skriv projekt dokumentation (features, CMS indholdstyper, setup guide)
+- [ ] Screenshots
+- [ ] Dokumentation
 
 ## Tech Stack
 
