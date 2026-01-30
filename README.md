@@ -1,8 +1,8 @@
-| title     | eksamensprojekt: cms forløb                                  |
-| --------- | ------------------------------------------------------------ |
-| kunde     | tattoo shop                                                  |
-| koncept   | en moderne tattoo shop med fokus på portfolio og salg.       |
-| målgruppe | folk der søger kunstneriske tattoos og relaterede produkter. |
+| title     | eksamensprojekt: cms forløb                            |
+| --------- | ------------------------------------------------------ |
+| kunde     | vinyl shop                                             |
+| koncept   | en moderne vinyl shop med fuld webshop funktionalitet. |
+| målgruppe | samlere og fans af vinyl og cd'er.                     |
 
 > [!warning]
 > dette er et eksamensprojekt. koden er til undervisningsformål og er ikke optimeret til produktionsbrug.
@@ -14,7 +14,7 @@
 > for at undgå typescript-fejl og sikre opdaterede typer skal strapi køres lokalt første gang:
 > `cd strapi && bun develop`
 
-dette projekt løser "mulighed 1" i cms-opgaven. sitet er bygget som en headless løsning til en fiktiv tattoo shop. sitet er en ssr side bygget i laravel, som får sin data fra strapi, der fungerer som headless cms.
+dette projekt løser "mulighed 1" i cms-opgaven. sitet er bygget som en headless løsning til en fiktiv vinyl shop. sitet er en ssr side bygget i laravel, som får sin data fra strapi, der fungerer som headless cms.
 
 ## spec liste
 
@@ -23,36 +23,39 @@ dette projekt løser "mulighed 1" i cms-opgaven. sitet er bygget som en headless
 - [x] projektstruktur og dokumentation
 - [x] readme.md med oversigt, features, tech stack
 - [x] .env med strapi url og token
-- [ ] hero indholdstype i strapi
-- [ ] portfolioitem indholdstype i strapi
-- [ ] product indholdstype i strapi
-- [ ] about indholdstype i strapi
-- [ ] eksempeldata i strapi
-- [ ] strapiservice med hero, portfolio, product, about
+- [ ] hero indholdstype i strapi (overskrift, undertekst, billede, cta)
+- [ ] product indholdstype i strapi (title, artist, genre, year, price, image, sleeve condition, media condition)
+- [ ] about indholdstype i strapi (title, body, image, signature)
+- [ ] genres i strapi (kun til filtrering - name, slug)
+- [ ] eksempeldata i strapi (10+ produkter, hero, about)
+- [ ] strapiservice med hero, products, about, genres
 - [ ] strapi image url helper
 
 ### fase 2: components
 
 - [x] layout component
-- [ ] header component
+- [ ] header component med logo, nav, search, cart icon
 - [ ] footer component
 - [x] button component
-- [x] card component
+- [x] card component til produkter
 - [x] input, textarea, label components
-- [ ] image component
+- [ ] product card (billede, titel, artist, pris, condition)
+- [ ] filter sidebar (genre, år, pris range)
+- [ ] cart drawer component
+- [ ] quantity selector
 
 ### fase 3: pages
 
-- [ ] home page
-- [ ] featured portfolio
-- [ ] portfolio page
-- [ ] product card og grid
-- [ ] products page
-- [ ] pricing page
-- [ ] faq page
-- [ ] testimonials page
-- [ ] contact page
+- [ ] home page med hero og featured products
+- [ ] products page med grid og filtre
+- [ ] product detail page (billede, info, add to cart)
+- [ ] cart page
+- [ ] checkout page (ui only, ingen payment)
+- [ ] order confirmation page
 - [ ] about page
+- [ ] contact page
+- [ ] login/register pages
+- [ ] profile page med order history
 
 ### fase 4: polish
 
@@ -60,11 +63,13 @@ dette projekt løser "mulighed 1" i cms-opgaven. sitet er bygget som en headless
 - [ ] error states og fallback ui
 - [ ] mobile responsive
 - [ ] page transition animationer
+- [ ] empty cart state
+- [ ] search funktion
 
 ### fase 5: testing & quality
 
-- [ ] feature test: homepage loading
-- [ ] feature test: portfolio page accessibility
+- [ ] feature test: products page loading
+- [ ] feature test: cart functionality
 - [ ] feature test: contact form validation
 - [ ] eslint fix
 - [ ] pint fix
