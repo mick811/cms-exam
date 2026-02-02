@@ -24,4 +24,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('profile');
 });
 
+Route::get('/products', function () {
+    return Inertia::render('products');
+})->name('products');
+
 require __DIR__.'/settings.php';
