@@ -51,6 +51,22 @@ class StrapiService
     }
 
     /**
+     * Search products by query string.
+     *
+     * @return array<int, mixed>
+     */
+    public function searchProducts(string $query): array
+    {
+        $params = [
+            'populate' => 'images',
+            'filters[Title][$containsi]' => $query,
+        ];
+        $data = $this->request('get', '/api/products', $params)->json('data');
+
+        return $data ?? [];
+    }
+
+    /**
      * Make HTTP request to Strapi.
      *
      * @param  array<string, mixed>  $data

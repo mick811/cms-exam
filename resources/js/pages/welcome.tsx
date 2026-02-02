@@ -1,6 +1,7 @@
 import { usePage } from '@inertiajs/react';
 import { ProductGallery } from '@/components/product-gallery';
 import { StrapiImage } from '@/components/strapi-image';
+import SimpleHeaderLayout from '@/layouts/simple-header-layout';
 import type { HeroData, SharedData, StrapiProduct } from '@/types';
 
 interface PageProps extends SharedData {
@@ -29,7 +30,7 @@ export default function Welcome() {
                     </h2>
                     <a
                         href="/products"
-                        className="shrink-0 text-sm font-medium tracking-wide uppercase underline underline-offset-4 transition-all hover:text-gray-300 sm:rounded-xs sm:border sm:border-white sm:px-4 sm:py-1.5 sm:text-base sm:no-underline sm:hover:bg-white sm:hover:text-black md:px-6 md:py-2 md:text-lg lg:px-8 lg:text-xl"
+                        className="shrink-0 text-sm font-medium tracking-wide uppercase underline underline-offset-4 transition-all hover:text-muted-foreground sm:rounded-xs sm:border sm:border-border sm:px-4 sm:py-1.5 sm:text-base sm:no-underline sm:hover:bg-primary sm:hover:text-primary-foreground md:px-6 md:py-2 md:text-lg lg:px-8 lg:text-xl"
                     >
                         See All
                     </a>
@@ -40,3 +41,7 @@ export default function Welcome() {
         </div>
     );
 }
+
+Welcome.layout = (page: React.ReactNode) => (
+    <SimpleHeaderLayout>{page}</SimpleHeaderLayout>
+);

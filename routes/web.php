@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\StrapiService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -23,6 +24,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('profile');
     })->name('profile');
 });
+
+Route::get('/search', function (Request $request, StrapiService $strapi) {
+    $query = $request->input('q', '');
+    $products = $query ? $strapi->searchProducts($query) : [];
+
+    return Inertia::render('search', [
+        'products' => $products,
+        'query' => $query,
+    ]);
+})->name('search');
 
 Route::get('/products', function () {
     return Inertia::render('products');
