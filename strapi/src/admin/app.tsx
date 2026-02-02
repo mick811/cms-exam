@@ -3,7 +3,7 @@ import './app.css';
 
 export default {
     config: {
-        locales: ['dk'],
+        locales: ['en'],
         theme: {
             light: {
                 colors: {

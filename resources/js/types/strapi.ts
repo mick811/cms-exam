@@ -1,0 +1,37 @@
+export interface StrapiImage {
+    id: number;
+    documentId: string;
+    name: string;
+    alternativeText: string | null;
+    caption: string | null;
+    width: number | null;
+    height: number | null;
+    formats: Record<string, unknown> | null;
+    hash: string;
+    ext: string;
+    mime: string;
+    size: number;
+    url: string;
+    previewUrl: string | null;
+    provider: string;
+    provider_metadata: unknown | null;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+}
+
+export interface StrapiMedia {
+    data: StrapiImage | null;
+}
+
+export type StrapiEntry<T> = {
+    id: number;
+    documentId: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+} & T;
+
+export type HeroData = StrapiEntry<{
+    image: StrapiImage;
+}>;

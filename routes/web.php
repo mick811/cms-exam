@@ -1,12 +1,18 @@
 <?php
 
+use App\Services\StrapiService;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
+Route::get('/', function (StrapiService $strapi) {
+    $hero = $strapi->for('hero')
+        ->with('image')
+        ->first();
+
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
+        'hero' => $hero,
     ]);
 })->name('home');
 
