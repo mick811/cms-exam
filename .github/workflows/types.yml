@@ -1,0 +1,39 @@
+name: types
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+      - master
+      - workos
+  pull_request:
+    branches:
+      - develop
+      - main
+      - master
+      - workos
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Node Dependencies
+        run: bun install
+
+      - name: Generate Wayfinder Routes
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan wayfinder:generate
+
+      - name: Type Check
+        run: bun run types
