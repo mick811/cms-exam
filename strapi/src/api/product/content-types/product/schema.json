@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "uid"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "files",
+        "images"
+      ]
+    },
+    "Artist": {
+      "type": "string",
+      "required": true
+    },
+    "Title": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "media_condition": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Mint (M)",
+        "Near Mint (M-)",
+        "Very Good Plus (VG+)",
+        "Very Good (VG)",
+        "Good Plus (G+)",
+        "Good (G)",
+        "Fair (F)",
+        "Poor (P)"
+      ]
+    },
+    "sleeve_condition": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Mint (M)",
+        "Near Mint (M-)",
+        "Very Good Plus (VG+)",
+        "Very Good (VG)",
+        "Good Plus (G+)",
+        "Good (G)",
+        "Fair (F)",
+        "Poor (P)"
+      ]
+    },
+    "stock": {
+      "type": "integer",
+      "default": 1
+    },
+    "format": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::format.format",
+      "inversedBy": "products"
+    },
+    "genre": {
+      "type": "string",
+      "required": true
+    },
+    "release_date": {
+      "type": "date",
+      "required": true
+    }
+  }
+}
