@@ -1,5 +1,5 @@
 import { Head, router, usePage } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ProductGallery } from '@/components/product-gallery';
 import { Input } from '@/components/ui/input';
 import { useDebounce } from '@/hooks/useSearch';
@@ -16,16 +16,13 @@ export default function Products() {
     const [search, setSearch] = useState(query ?? '');
     const debounced = useDebounce(search, 300);
 
-    useEffect(() => setSearch(query ?? ''), [query]);
-
-    useEffect(() => {
-        if (debounced === query) return;
+    if (debounced !== query && debounced === search) {
         router.get('/products', debounced ? { q: debounced } : {}, {
             preserveScroll: true,
             preserveState: true,
             replace: true,
         });
-    }, [debounced, query]);
+    }
 
     return (
         <div className="px-4 py-6 md:px-8 md:py-8 lg:px-12">

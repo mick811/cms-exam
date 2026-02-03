@@ -1,6 +1,6 @@
 import { Link, router, usePage } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
 import { Search, ShoppingCart, User } from 'lucide-react';
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { useSuggestions } from '@/hooks/useSearch';
 import type { SharedData } from '@/types';

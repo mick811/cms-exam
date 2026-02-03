@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export function useDebounce<T>(value: T, ms = 300): T {
     const [debounced, setDebounced] = useState(value);
@@ -12,11 +12,13 @@ export function useDebounce<T>(value: T, ms = 300): T {
 }
 
 export function useSuggestions<T>(url: string | null, ms = 300): T[] {
-    const [data, setData] = useState<T[]>([]);
+    const [data, setData] = useState<{ url: string; results: T[] } | null>(
+        null,
+    );
     const debounced = useDebounce(url, ms);
 
     useEffect(() => {
-        if (!debounced) return setData([]);
+        if (!debounced) return;
         const controller = new AbortController();
 
         fetch(debounced, {
@@ -24,10 +26,14 @@ export function useSuggestions<T>(url: string | null, ms = 300): T[] {
             headers: { Accept: 'application/json' },
         })
             .then((r) => (r.ok ? r.json() : []))
-            .then(setData)
+            .then((results: T[]) => setData({ url: debounced, results }))
             .catch(() => {});
 
         return () => controller.abort();
     }, [debounced]);
-    return data;
+
+    return useMemo(() => {
+        if (!debounced || data?.url !== debounced) return [];
+        return data.results;
+    }, [debounced, data]);
 }
