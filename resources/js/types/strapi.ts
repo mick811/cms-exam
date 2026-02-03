@@ -37,13 +37,13 @@ export type HeroData = StrapiEntry<{
 }>;
 
 export type StrapiFormat = StrapiEntry<{
-    Name: string;
+    name: string;
 }>;
 
 export type StrapiProduct = StrapiEntry<{
     slug: string;
-    Title: string;
-    Artist: string;
+    title: string;
+    artist: string;
     release_date: string;
     price: number;
     stock: number;

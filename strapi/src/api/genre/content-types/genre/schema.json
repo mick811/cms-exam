@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Type": {
+    "type": {
       "type": "string",
       "required": true,
       "unique": true

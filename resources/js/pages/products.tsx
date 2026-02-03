@@ -56,7 +56,14 @@ export default function Products() {
             </div>
 
             {products.length > 0 ? (
-                <ProductGallery products={products} className="mt-8" />
+                <ProductGallery
+                    products={products}
+                    variant="catalog"
+                    className="mt-8"
+                    onAddToCart={(product) => {
+                        console.log(product);
+                    }}
+                />
             ) : (
                 <div className="mt-10 text-center">
                     <p className="text-lg text-muted-foreground">

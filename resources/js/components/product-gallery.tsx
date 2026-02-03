@@ -1,14 +1,93 @@
 import { StrapiImage } from '@/components/strapi-image';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { StrapiProduct } from '@/types';
+
+type ProductGalleryVariant = 'popular' | 'catalog';
+
+interface ProductGalleryProps {
+    products: StrapiProduct[];
+    className?: string;
+    variant?: ProductGalleryVariant;
+    onAddToCart?: (product: StrapiProduct) => void;
+}
+
+function formatPrice(price: number): string {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    }).format(price);
+}
 
 export function ProductGallery({
     products,
     className,
-}: {
-    products: StrapiProduct[];
-    className?: string;
-}) {
+    variant = 'popular',
+    onAddToCart,
+}: ProductGalleryProps) {
+    if (variant === 'catalog') {
+        return (
+            <ul
+                role="list"
+                className={cn(
+                    'grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4',
+                    className,
+                )}
+            >
+                {products.map((product) => (
+                    <li
+                        key={product.id}
+                        role="listitem"
+                        className="group flex flex-col overflow-hidden rounded-xs border border-border bg-card"
+                    >
+                        <a
+                            href={`/products/${product.id}`}
+                            className="aspect-square w-full overflow-hidden"
+                        >
+                            <StrapiImage
+                                image={product.images[0]}
+                                alt={
+                                    product.images[0]?.alternativeText ||
+                                    product.title
+                                }
+                                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                fallback={
+                                    <div className="h-full w-full bg-slate-300" />
+                                }
+                            />
+                        </a>
+                        <div className="flex flex-1 flex-col gap-2 p-3 sm:p-4">
+                            <a
+                                href={`/products/${product.id}`}
+                                className="line-clamp-2 text-sm font-medium hover:underline sm:text-base"
+                            >
+                                {product.title}
+                            </a>
+                            <p className="text-xs text-muted-foreground sm:text-sm">
+                                {product.artist}
+                            </p>
+                            <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+                                <span className="text-sm font-semibold sm:text-base">
+                                    {formatPrice(product.price)}
+                                </span>
+                                <Button
+                                    size="sm"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        onAddToCart?.(product);
+                                    }}
+                                    className="shrink-0 rounded-xs text-xs sm:text-sm"
+                                >
+                                    Add to Cart
+                                </Button>
+                            </div>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+
     return (
         <ul
             role="list"
@@ -29,7 +108,7 @@ export function ProductGallery({
                                 image={product.images[0]}
                                 alt={
                                     product.images[0]?.alternativeText ||
-                                    product.Title
+                                    product.title
                                 }
                                 className="h-full w-full object-cover"
                                 fallback={

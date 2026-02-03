@@ -23,11 +23,11 @@
         "images"
       ]
     },
-    "Artist": {
+    "artist": {
       "type": "string",
       "required": true
     },
-    "Title": {
+    "title": {
       "type": "string",
       "required": true,
       "unique": false
