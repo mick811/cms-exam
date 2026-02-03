@@ -1,0 +1,32 @@
+name: security audit
+
+on:
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 9 * * 1'
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: |
+          composer install --no-interaction --prefer-dist
+          bun install
+
+      - name: Run composer audit
+        run: composer audit
+
+      - name: Run npm audit
+        run: bun audit
