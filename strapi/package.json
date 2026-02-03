@@ -35,6 +35,12 @@
         "node": ">=20.0.0 <=24.x.x",
         "npm": ">=6.0.0"
     },
+    "overrides": {
+        "tar": "^7.5.3",
+        "tmp": "^0.2.4",
+        "lodash": "^4.17.23",
+        "esbuild": "^0.27.2"
+    },
     "strapi": {
         "uuid": "88cfe12e-ac76-4d47-995a-103987667095",
         "installId": "318d523a1cedfd53971b7840db0c1d9eb7a98538981b9c0073252c39bfae2111"
