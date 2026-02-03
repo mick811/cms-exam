@@ -8,9 +8,9 @@ export default function SimpleHeaderLayout({
     children,
 }: SimpleHeaderLayoutProps) {
     return (
-        <>
+        <div className="pt-16">
             <Header />
             {children}
-        </>
+        </div>
     );
 }
