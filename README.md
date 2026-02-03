@@ -35,20 +35,20 @@ dette projekt løser "mulighed 1" i cms-opgaven. sitet er bygget som en headless
 ### fase 2: components
 
 - [x] layout component
-- [ ] header component med logo, nav, search, cart icon
+- [x] header component med logo, nav, search, cart icon
 - [ ] footer component
 - [x] button component
 - [x] card component til produkter
 - [x] input, textarea, label components
 - [ ] product card (billede, titel, artist, pris, condition)
-- [ ] filter sidebar (genre, år, pris range)
+- [x] filter sidebar (genre, år, pris range)
 - [ ] cart drawer component
 - [ ] quantity selector
 
 ### fase 3: pages
 
 - [x] home page med hero og featured products
-- [ ] products page med grid og filtre
+- [x] products page med grid og filtre
 - [ ] product detail page (billede, info, add to cart)
 - [ ] cart page
 - [ ] checkout page (ui only, ingen payment)
@@ -64,7 +64,7 @@ dette projekt løser "mulighed 1" i cms-opgaven. sitet er bygget som en headless
 - [ ] error states og fallback ui
 - [ ] mobile responsive
 - [ ] empty cart state
-- [ ] search funktion
+- [x] search funktion
 
 ### fase 5: testing & quality
 
