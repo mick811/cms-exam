@@ -1,78 +1,98 @@
-import { Head, router, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { Head, usePage } from '@inertiajs/react';
+import { ProductFilters } from '@/components/products/product-filters';
+import { ProductSearch } from '@/components/products/product-search';
 import { ProductGallery } from '@/components/product-gallery';
-import { Input } from '@/components/ui/input';
-import { useDebounce } from '@/hooks/useSearch';
+import { useProductFilters } from '@/hooks/useProductFilters';
 import SimpleHeaderLayout from '@/layouts/simple-header-layout';
-import type { SharedData, StrapiProduct } from '@/types';
+import type {
+    SharedData,
+    StrapiFormat,
+    StrapiGenre,
+    StrapiProduct,
+} from '@/types';
+
+interface Filters {
+    query: string;
+    format: number | null;
+    genre: number | null;
+    minPrice: number | null;
+    maxPrice: number | null;
+}
 
 interface PageProps extends SharedData {
     products: StrapiProduct[];
-    query: string;
+    formats: StrapiFormat[];
+    genres: StrapiGenre[];
+    priceRange: { min: number; max: number };
+    filters: Filters;
 }
 
 export default function Products() {
-    const { products, query } = usePage<PageProps>().props;
-    const [search, setSearch] = useState(query ?? '');
-    const debounced = useDebounce(search, 300);
+    const { products, formats, genres, priceRange, filters } =
+        usePage<PageProps>().props;
 
-    if (debounced !== query && debounced === search) {
-        router.get('/products', debounced ? { q: debounced } : {}, {
-            preserveScroll: true,
-            preserveState: true,
-            replace: true,
-        });
-    }
+    const {
+        search,
+        setSearch,
+        format,
+        setFormat,
+        genre,
+        setGenre,
+        price,
+        setPrice,
+    } = useProductFilters({ initialFilters: filters, priceRange });
 
     return (
-        <div className="px-4 py-6 md:px-8 md:py-8 lg:px-12">
-            <Head title={query ? `Products: ${query}` : 'Products'} />
+        <div className="flex gap-8 px-4 py-6 md:px-8 md:py-8 lg:px-12">
+            <Head
+                title={
+                    filters.query ? `Products: ${filters.query}` : 'Products'
+                }
+            />
 
-            <div className="flex flex-col gap-6">
-                <div>
-                    <h1 className="text-2xl font-semibold tracking-wide uppercase sm:text-3xl md:text-4xl">
-                        Products
-                    </h1>
-                    {query && (
-                        <p className="mt-2 text-muted-foreground">
-                            Showing results for "{query}"
-                        </p>
-                    )}
+            <ProductFilters
+                formats={formats}
+                genres={genres}
+                priceRange={priceRange}
+                format={format}
+                genre={genre}
+                price={price}
+                onFormatChange={setFormat}
+                onGenreChange={setGenre}
+                onPriceChange={setPrice}
+            />
+
+            <div className="flex-1">
+                <div className="flex flex-col gap-6">
+                    <div>
+                        <h1 className="text-2xl font-semibold tracking-wide uppercase sm:text-3xl md:text-4xl">
+                            Products
+                        </h1>
+                        {filters.query && (
+                            <p className="mt-2 text-muted-foreground">
+                                Showing results for "{filters.query}"
+                            </p>
+                        )}
+                    </div>
+
+                    <ProductSearch value={search} onChange={setSearch} />
                 </div>
 
-                <form className="flex w-full max-w-xl flex-col gap-2">
-                    <label htmlFor="products-search" className="sr-only">
-                        Search products
-                    </label>
-                    <Input
-                        id="products-search"
-                        type="search"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Filter by title..."
-                        className="h-11 rounded-xs bg-sidebar-accent text-sidebar-accent-foreground placeholder:text-sidebar-foreground/70"
+                {products.length > 0 ? (
+                    <ProductGallery
+                        products={products}
+                        variant="catalog"
+                        className="mt-8"
+                        onAddToCart={(product) => console.log(product)}
                     />
-                </form>
+                ) : (
+                    <div className="mt-10 text-center">
+                        <p className="text-lg text-muted-foreground">
+                            No products found.
+                        </p>
+                    </div>
+                )}
             </div>
-
-            {products.length > 0 ? (
-                <ProductGallery
-                    products={products}
-                    variant="catalog"
-                    className="mt-8"
-                    onAddToCart={(product) => {
-                        console.log(product);
-                    }}
-                />
-            ) : (
-                <div className="mt-10 text-center">
-                    <p className="text-lg text-muted-foreground">
-                        {query
-                            ? 'No products found matching your search.'
-                            : 'Start typing to filter products.'}
-                    </p>
-                </div>
-            )}
         </div>
     );
 }
