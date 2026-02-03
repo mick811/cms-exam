@@ -1,5 +1,5 @@
 import { router } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDebounce } from '@/hooks/useSearch';
 
 interface Filters {
@@ -25,8 +25,12 @@ export function useProductFilters({
     priceRange,
 }: UseProductFiltersOptions) {
     const [search, setSearch] = useState(initialFilters.query || '');
-    const [format, setFormat] = useState(initialFilters.format?.toString() || 'all');
-    const [genre, setGenre] = useState(initialFilters.genre?.toString() || 'all');
+    const [format, setFormat] = useState(
+        initialFilters.format?.toString() || 'all',
+    );
+    const [genre, setGenre] = useState(
+        initialFilters.genre?.toString() || 'all',
+    );
     const [price, setPrice] = useState<[number, number]>([
         initialFilters.minPrice ?? priceRange.min,
         initialFilters.maxPrice ?? priceRange.max,
@@ -36,46 +40,53 @@ export function useProductFilters({
     const debouncedPrice = useDebounce(price, 300);
 
     // builds url params and navigates
-    function navigate(overrides: Partial<Filters> = {}) {
-        const params: Record<string, string | number> = {};
+    const navigate = useCallback(
+        (overrides: Partial<Filters> = {}) => {
+            const params: Record<string, string | number> = {};
 
-        // use 'in' check because null is a valid value (means "all")
-        const q = 'query' in overrides ? overrides.query : debouncedSearch;
-        const f =
-            'format' in overrides
-                ? overrides.format
-                : format !== 'all'
-                  ? parseInt(format)
-                  : null;
-        const g =
-            'genre' in overrides
-                ? overrides.genre
-                : genre !== 'all'
-                  ? parseInt(genre)
-                  : null;
-        const min =
-            'minPrice' in overrides ? overrides.minPrice : debouncedPrice[0];
-        const max =
-            'maxPrice' in overrides ? overrides.maxPrice : debouncedPrice[1];
+            // use 'in' check because null is a valid value (means "all")
+            const q = 'query' in overrides ? overrides.query : debouncedSearch;
+            const f =
+                'format' in overrides
+                    ? overrides.format
+                    : format !== 'all'
+                      ? parseInt(format)
+                      : null;
+            const g =
+                'genre' in overrides
+                    ? overrides.genre
+                    : genre !== 'all'
+                      ? parseInt(genre)
+                      : null;
+            const min =
+                'minPrice' in overrides
+                    ? overrides.minPrice
+                    : debouncedPrice[0];
+            const max =
+                'maxPrice' in overrides
+                    ? overrides.maxPrice
+                    : debouncedPrice[1];
 
-        if (q) params.q = q;
-        if (f) params.format = f;
-        if (g) params.genre = g;
-        if (min && min !== priceRange.min) params.minPrice = min;
-        if (max && max !== priceRange.max) params.maxPrice = max;
+            if (q) params.q = q;
+            if (f) params.format = f;
+            if (g) params.genre = g;
+            if (min && min !== priceRange.min) params.minPrice = min;
+            if (max && max !== priceRange.max) params.maxPrice = max;
 
-        router.get('/products', params, {
-            preserveScroll: true,
-            preserveState: true,
-            replace: true,
-        });
-    }
+            router.get('/products', params, {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true,
+            });
+        },
+        [debouncedSearch, format, genre, debouncedPrice, priceRange],
+    );
 
     useEffect(() => {
         if (debouncedSearch !== initialFilters.query) {
             navigate({ query: debouncedSearch });
         }
-    }, [debouncedSearch]);
+    }, [debouncedSearch, initialFilters.query, navigate]);
 
     useEffect(() => {
         const currentMin = initialFilters.minPrice ?? priceRange.min;
@@ -90,7 +101,14 @@ export function useProductFilters({
                 maxPrice: debouncedPrice[1],
             });
         }
-    }, [debouncedPrice]);
+    }, [
+        debouncedPrice,
+        initialFilters.minPrice,
+        initialFilters.maxPrice,
+        priceRange.min,
+        priceRange.max,
+        navigate,
+    ]);
 
     return {
         search,

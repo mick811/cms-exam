@@ -162,7 +162,7 @@ function PriceFilter({
                 max={priceRange.max}
                 step={1}
                 value={value}
-                onValueChange={(v) => onChange(v as [number, number])}
+                onValueChange={(v: number[]) => onChange(v as [number, number])}
             />
         </div>
     );

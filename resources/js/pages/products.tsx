@@ -1,7 +1,7 @@
 import { Head, usePage } from '@inertiajs/react';
+import { ProductGallery } from '@/components/product-gallery';
 import { ProductFilters } from '@/components/products/product-filters';
 import { ProductSearch } from '@/components/products/product-search';
-import { ProductGallery } from '@/components/product-gallery';
 import { useProductFilters } from '@/hooks/useProductFilters';
 import SimpleHeaderLayout from '@/layouts/simple-header-layout';
 import type {
