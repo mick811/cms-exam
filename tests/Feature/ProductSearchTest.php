@@ -16,8 +16,17 @@ class ProductSearchTest extends TestCase
         $this->mock(StrapiService::class, function (Mockery\MockInterface $mock): void {
             $mock->shouldReceive('getProducts')
                 ->once()
-                ->with(null)
+                ->with([])
                 ->andReturn([]);
+            $mock->shouldReceive('getFormats')
+                ->once()
+                ->andReturn([]);
+            $mock->shouldReceive('getGenres')
+                ->once()
+                ->andReturn([]);
+            $mock->shouldReceive('getPriceRange')
+                ->once()
+                ->andReturn(['min' => 0, 'max' => 1000]);
         });
 
         $response = $this->get(route('products'));
@@ -30,8 +39,17 @@ class ProductSearchTest extends TestCase
         $this->mock(StrapiService::class, function (Mockery\MockInterface $mock): void {
             $mock->shouldReceive('getProducts')
                 ->once()
-                ->with('jazz')
+                ->with(['query' => 'jazz'])
                 ->andReturn([]);
+            $mock->shouldReceive('getFormats')
+                ->once()
+                ->andReturn([]);
+            $mock->shouldReceive('getGenres')
+                ->once()
+                ->andReturn([]);
+            $mock->shouldReceive('getPriceRange')
+                ->once()
+                ->andReturn(['min' => 0, 'max' => 1000]);
         });
 
         $response = $this->get(route('products', ['q' => 'jazz']));
