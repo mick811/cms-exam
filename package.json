@@ -12,7 +12,8 @@
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
-        "types": "tsc --noEmit"
+        "types": "tsc --noEmit",
+        "prepare": "husky"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.2",
@@ -27,6 +28,8 @@
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^7.0.1",
         "eslint-plugin-tailwind-canonical-classes": "^1.1.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.2.7",
         "prettier": "^3.8.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
         "typescript-eslint": "^8.54.0"
@@ -80,5 +83,17 @@
         "tmp": "^0.2.4",
         "lodash": "^4.17.23",
         "esbuild": "^0.27.2"
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.php": [
+            "vendor/bin/pint"
+        ],
+        "*.{json,md,css}": [
+            "prettier --write"
+        ]
     }
 }
