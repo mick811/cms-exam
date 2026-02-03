@@ -5,6 +5,10 @@ namespace App\Services;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
+/**
+ * Service class for interacting with the Strapi CMS API.
+ * Handles all product, format, and genre data fetching.
+ */
 class StrapiService
 {
     protected string $baseUrl;
@@ -13,6 +17,7 @@ class StrapiService
 
     public function __construct()
     {
+        // remove trailing slash to avoid double slashes in urls
         $this->baseUrl = rtrim(config('strapi.url'), '/');
         $this->token = config('strapi.token');
     }
@@ -51,16 +56,47 @@ class StrapiService
     }
 
     /**
+     * Get products from Strapi with optional filtering.
+     *
+     * Strapi uses a specific query syntax for filtering:
+     * - filters[field][$containsi] = case-insensitive contains
+     * - filters[field][$eq] = exact match
+     * - filters[field][$gte] = greater than or equal
+     * - filters[field][$lte] = less than or equal
+     *
+     * @param  array{query?: string, format?: int, genre?: int, minPrice?: float, maxPrice?: float}  $filters
      * @return array<int, mixed>
      */
-    public function getProducts(?string $query = null): array
+    public function getProducts(array $filters = []): array
     {
+        // always load related images, format and genre data
         $params = [
-            'populate' => ['images', 'format'],
+            'populate' => ['images', 'format', 'genre'],
         ];
 
-        if ($query) {
-            $params['filters[Title][$containsi]'] = $query;
+        // text search - $containsi means case-insensitive contains
+        if (! empty($filters['query'])) {
+            $params['filters[title][$containsi]'] = $filters['query'];
+        }
+
+        // filter by format relation (matching the format's id)
+        if (! empty($filters['format'])) {
+            $params['filters[format][id][$eq]'] = $filters['format'];
+        }
+
+        // filter by genre relation
+        if (! empty($filters['genre'])) {
+            $params['filters[genre][id][$eq]'] = $filters['genre'];
+        }
+
+        // price range filters
+        // using isset() instead of empty() because 0 is a valid price
+        if (isset($filters['minPrice'])) {
+            $params['filters[price][$gte]'] = $filters['minPrice'];
+        }
+
+        if (isset($filters['maxPrice'])) {
+            $params['filters[price][$lte]'] = $filters['maxPrice'];
         }
 
         $data = $this->request('get', '/api/products', $params)->json('data');
@@ -69,13 +105,71 @@ class StrapiService
     }
 
     /**
+     * Get all available formats (vinyl, cd, cassette, etc).
+     *
+     * @return array<int, mixed>
+     */
+    public function getFormats(): array
+    {
+        $data = $this->request('get', '/api/formats')->json('data');
+
+        return $data ?? [];
+    }
+
+    /**
+     * Get all available genres (rock, jazz, electronic, etc).
+     *
+     * @return array<int, mixed>
+     */
+    public function getGenres(): array
+    {
+        $data = $this->request('get', '/api/genres')->json('data');
+
+        return $data ?? [];
+    }
+
+    /**
+     * Get the min and max price across all products.
+     * Used to set the bounds for the price filter slider.
+     *
+     * @return array{min: float, max: float}
+     */
+    public function getPriceRange(): array
+    {
+        // only fetch price field to keep response small
+        // limit 1000 should cover most catalogs
+        $params = [
+            'fields' => ['price'],
+            'pagination[limit]' => 1000,
+        ];
+
+        $data = $this->request('get', '/api/products', $params)->json('data') ?? [];
+
+        // extract just the price values into a flat array
+        $prices = array_column($data, 'price');
+
+        // fallback if no products exist yet
+        if (empty($prices)) {
+            return ['min' => 0, 'max' => 1000];
+        }
+
+        return [
+            'min' => (float) min($prices),
+            'max' => (float) max($prices),
+        ];
+    }
+
+    /**
+     * Get product suggestions for search autocomplete.
+     * Returns a limited set of products matching the query.
+     *
      * @return array<int, mixed>
      */
     public function getProductSuggestions(string $query, int $limit = 6): array
     {
         $params = [
             'pagination[limit]' => $limit,
-            'filters[Title][$containsi]' => $query,
+            'filters[title][$containsi]' => $query,
         ];
 
         $data = $this->request('get', '/api/products', $params)->json('data');
@@ -84,19 +178,26 @@ class StrapiService
     }
 
     /**
-     * Make HTTP request to Strapi.
+     * Make an HTTP request to Strapi.
+     *
+     * Handles authentication if a token is configured.
+     * Uses Laravel's HTTP client which wraps Guzzle.
      *
      * @param  array<string, mixed>  $data
      */
     protected function request(string $method, string $path, array $data = []): Response
     {
         $url = $this->baseUrl.$path;
+
+        // start building the request, always expect json back
         $request = Http::acceptJson();
 
+        // add bearer token auth if configured
         if ($this->token) {
             $request->withToken($this->token);
         }
 
+        // dynamically call get/post/put/delete based on $method
         return $request->{$method}($url, $data);
     }
 }
