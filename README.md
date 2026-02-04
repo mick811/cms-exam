@@ -13,7 +13,7 @@ en moderne vinyl shop med fuld webshop funktionalitet for samlere og fans af vin
 
 ## hvad er inertia.js?
 
-inertia er en "glue" mellem backend og frontend. når du klikker et link, sender inertia en ajax request til laravel. laravel returnerer json med react komponent + props. inertia opdaterer dom'en uden page reload. det giver:
+inertia er en bro mellem backend og frontend. når du klikker et link, sender inertia en ajax request til laravel. laravel returnerer json med react komponent + props. inertia opdaterer dom'en uden page reload. det giver:
 
 - spa oplevelse (hurtig navigation)
 - server-side routing (sikrere)
