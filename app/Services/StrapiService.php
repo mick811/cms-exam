@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Service class for interacting with the Strapi CMS API.
@@ -15,11 +17,21 @@ class StrapiService
 
     protected ?string $token;
 
+    protected bool $isAvailable = true;
+
     public function __construct()
     {
         // remove trailing slash to avoid double slashes in urls
         $this->baseUrl = rtrim(config('strapi.url'), '/');
         $this->token = config('strapi.token');
+    }
+
+    /**
+     * Check if Strapi is available.
+     */
+    public function isAvailable(): bool
+    {
+        return $this->isAvailable;
     }
 
     /**
@@ -46,12 +58,19 @@ class StrapiService
                 'pagination[limit]' => $config['limit'] ?? null,
             ]);
 
-            // call strapi api - uses 'for' if set, otherwise uses the array key
-            $data = $this->request('get', '/api/'.($config['for'] ?? $key), $params)->json('data');
+            try {
+                // call strapi api - uses 'for' if set, otherwise uses the array key
+                $data = $this->request('get', '/api/'.($config['for'] ?? $key), $params)->json('data');
 
-            // if first is true, return the single item, else return array
-            // ?? [] ensures we return an empty array instead of null when no data
-            return ($config['first'] ?? false) ? $data : ($data ?? []);
+                // if first is true, return the single item, else return array
+                // ?? [] ensures we return an empty array instead of null when no data
+                return ($config['first'] ?? false) ? $data : ($data ?? []);
+            } catch (ConnectionException $e) {
+                Log::warning('Strapi connection failed', ['key' => $key, 'error' => $e->getMessage()]);
+                $this->isAvailable = false;
+
+                return ($config['first'] ?? false) ? null : [];
+            }
         })->all();
     }
 
@@ -99,9 +118,16 @@ class StrapiService
             $params['filters[price][$lte]'] = $filters['maxPrice'];
         }
 
-        $data = $this->request('get', '/api/products', $params)->json('data');
+        try {
+            $data = $this->request('get', '/api/products', $params)->json('data');
 
-        return $data ?? [];
+            return $data ?? [];
+        } catch (ConnectionException $e) {
+            Log::warning('Strapi connection failed fetching products', ['error' => $e->getMessage()]);
+            $this->isAvailable = false;
+
+            return [];
+        }
     }
 
     /**
@@ -111,9 +137,16 @@ class StrapiService
      */
     public function getFormats(): array
     {
-        $data = $this->request('get', '/api/formats')->json('data');
+        try {
+            $data = $this->request('get', '/api/formats')->json('data');
 
-        return $data ?? [];
+            return $data ?? [];
+        } catch (ConnectionException $e) {
+            Log::warning('Strapi connection failed fetching formats', ['error' => $e->getMessage()]);
+            $this->isAvailable = false;
+
+            return [];
+        }
     }
 
     /**
@@ -123,9 +156,16 @@ class StrapiService
      */
     public function getGenres(): array
     {
-        $data = $this->request('get', '/api/genres')->json('data');
+        try {
+            $data = $this->request('get', '/api/genres')->json('data');
 
-        return $data ?? [];
+            return $data ?? [];
+        } catch (ConnectionException $e) {
+            Log::warning('Strapi connection failed fetching genres', ['error' => $e->getMessage()]);
+            $this->isAvailable = false;
+
+            return [];
+        }
     }
 
     /**
@@ -143,7 +183,14 @@ class StrapiService
             'pagination[limit]' => 1000,
         ];
 
-        $data = $this->request('get', '/api/products', $params)->json('data') ?? [];
+        try {
+            $data = $this->request('get', '/api/products', $params)->json('data') ?? [];
+        } catch (ConnectionException $e) {
+            Log::warning('Strapi connection failed fetching price range', ['error' => $e->getMessage()]);
+            $this->isAvailable = false;
+
+            return ['min' => 0, 'max' => 1000];
+        }
 
         // extract just the price values into a flat array
         $prices = array_column($data, 'price');
@@ -172,9 +219,16 @@ class StrapiService
             'filters[title][$containsi]' => $query,
         ];
 
-        $data = $this->request('get', '/api/products', $params)->json('data');
+        try {
+            $data = $this->request('get', '/api/products', $params)->json('data');
 
-        return $data ?? [];
+            return $data ?? [];
+        } catch (ConnectionException $e) {
+            Log::warning('Strapi connection failed fetching suggestions', ['error' => $e->getMessage()]);
+            $this->isAvailable = false;
+
+            return [];
+        }
     }
 
     /**
@@ -189,9 +243,16 @@ class StrapiService
             'filters[slug][$eq]' => $slug,
         ];
 
-        $data = $this->request('get', '/api/products', $params)->json('data');
+        try {
+            $data = $this->request('get', '/api/products', $params)->json('data');
 
-        return (! empty($data)) ? $data[0] : null;
+            return (! empty($data)) ? $data[0] : null;
+        } catch (ConnectionException $e) {
+            Log::warning('Strapi connection failed fetching product', ['slug' => $slug, 'error' => $e->getMessage()]);
+            $this->isAvailable = false;
+
+            return null;
+        }
     }
 
     /**
@@ -201,13 +262,15 @@ class StrapiService
      * Uses Laravel's HTTP client which wraps Guzzle.
      *
      * @param  array<string, mixed>  $data
+     *
+     * @throws ConnectionException
      */
     protected function request(string $method, string $path, array $data = []): Response
     {
         $url = $this->baseUrl.$path;
 
         // start building the request, always expect json back
-        $request = Http::acceptJson();
+        $request = Http::acceptJson()->timeout(10);
 
         // add bearer token auth if configured
         if ($this->token) {
