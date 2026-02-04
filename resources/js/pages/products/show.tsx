@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import SimpleHeaderLayout from '@/layouts/simple-header-layout';
+import { useCartStore } from '@/stores/cart';
 import type { SharedData, StrapiProduct } from '@/types';
 
 interface PageProps extends SharedData {
@@ -22,6 +23,18 @@ interface PageProps extends SharedData {
 export default function ProductShow() {
     const { product } = usePage<PageProps>().props;
     const [quantity, setQuantity] = useState(1);
+    const addItem = useCartStore((state) => state.addItem);
+    const getItemQuantity = useCartStore((state) => state.getItemQuantity);
+    const cartQuantity = getItemQuantity(product.id);
+    const availableStock = (product.stock || 0) - cartQuantity;
+
+    const handleAddToCart = () => {
+        for (let i = 0; i < quantity; i++) {
+            if (!addItem(product)) {
+                break;
+            }
+        }
+    };
 
     const formattedPrice = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -43,7 +56,7 @@ export default function ProductShow() {
                             product.images.map((image) => (
                                 <div
                                     key={image.id}
-                                    className="aspect-square overflow-hidden border border-border bg-neutral-50 dark:bg-neutral-900"
+                                    className="aspect-square overflow-hidden border border-border bg-secondary"
                                 >
                                     <StrapiImage
                                         image={image}
@@ -53,7 +66,7 @@ export default function ProductShow() {
                                 </div>
                             ))
                         ) : (
-                            <div className="col-span-full flex aspect-square items-center justify-center border border-border bg-neutral-50 dark:bg-neutral-900">
+                            <div className="col-span-full flex aspect-square items-center justify-center border border-border bg-secondary">
                                 <span className="text-[11px] font-medium tracking-[0.15em] text-muted-foreground uppercase">
                                     Image unavailable
                                 </span>
@@ -90,7 +103,7 @@ export default function ProductShow() {
                                                     Math.max(1, quantity - 1),
                                                 )
                                             }
-                                            className="flex size-12 items-center justify-center transition-colors hover:bg-neutral-50 disabled:opacity-20 dark:hover:bg-neutral-900"
+                                            className="flex size-12 items-center justify-center transition-colors hover:bg-secondary disabled:opacity-20"
                                             disabled={quantity <= 1}
                                         >
                                             <Minus className="size-3" />
@@ -103,15 +116,15 @@ export default function ProductShow() {
                                             onClick={() =>
                                                 setQuantity(
                                                     Math.min(
-                                                        product.stock || 99,
+                                                        availableStock,
                                                         quantity + 1,
                                                     ),
                                                 )
                                             }
-                                            className="flex size-12 items-center justify-center transition-colors hover:bg-neutral-50 disabled:opacity-20 dark:hover:bg-neutral-900"
+                                            className="flex size-12 items-center justify-center transition-colors hover:bg-secondary disabled:opacity-20"
                                             disabled={
-                                                quantity >=
-                                                (product.stock || 99)
+                                                quantity >= availableStock ||
+                                                availableStock <= 0
                                             }
                                         >
                                             <Plus className="size-3" />
@@ -121,9 +134,13 @@ export default function ProductShow() {
 
                                 <Button
                                     size="lg"
-                                    className="h-14 w-full rounded-none bg-foreground text-[11px] font-medium tracking-[0.15em] text-background uppercase transition-colors hover:bg-foreground/90"
+                                    onClick={handleAddToCart}
+                                    disabled={availableStock <= 0}
+                                    className="h-14 w-full rounded-none bg-foreground text-[11px] font-medium tracking-[0.15em] text-background uppercase transition-colors hover:bg-foreground/90 disabled:opacity-50"
                                 >
-                                    Add to Bag
+                                    {availableStock <= 0
+                                        ? 'Out of Stock'
+                                        : 'Add to Bag'}
                                 </Button>
 
                                 {product.stock <= 5 && product.stock > 0 && (

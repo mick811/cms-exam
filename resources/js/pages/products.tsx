@@ -83,7 +83,6 @@ export default function Products() {
                         products={products}
                         variant="catalog"
                         className="mt-8"
-                        onAddToCart={(product) => console.log(product)}
                     />
                 ) : (
                     <div className="mt-10 text-center">

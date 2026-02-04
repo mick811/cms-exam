@@ -1,8 +1,10 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import { Search, ShoppingCart, User } from 'lucide-react';
 import { useState } from 'react';
+import { CartDrawer } from '@/components/cart/cart-drawer';
 import { Input } from '@/components/ui/input';
 import { useSuggestions } from '@/hooks/useSearch';
+import { useCartStore } from '@/stores/cart';
 import type { SharedData } from '@/types';
 import AppLogoIcon from './app-logo-icon';
 
@@ -13,6 +15,8 @@ export default function Header() {
 
     const [search, setSearch] = useState(query);
     const [open, setOpen] = useState(false);
+    const [cartOpen, setCartOpen] = useState(false);
+    const itemCount = useCartStore((state) => state.itemCount());
 
     const suggestions = useSuggestions<Suggestion>(
         open && search.length >= 2
@@ -109,11 +113,21 @@ export default function Header() {
                     <button className="p-2 transition-colors hover:text-sidebar-accent-foreground">
                         <User className="size-5" />
                     </button>
-                    <button className="p-2 transition-colors hover:text-sidebar-accent-foreground">
+                    <button
+                        onClick={() => setCartOpen(true)}
+                        className="relative cursor-pointer p-2 transition-colors hover:text-sidebar-accent-foreground"
+                    >
                         <ShoppingCart className="size-5" />
+                        {itemCount > 0 && (
+                            <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-[10px] font-bold text-background">
+                                {itemCount > 99 ? '99+' : itemCount}
+                            </span>
+                        )}
                     </button>
                 </div>
             </div>
+
+            <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
         </header>
     );
 }

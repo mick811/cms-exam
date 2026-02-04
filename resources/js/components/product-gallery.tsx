@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { StrapiImage } from '@/components/strapi-image';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
+import { useCartStore } from '@/stores/cart';
 import type { StrapiProduct } from '@/types';
 
 type ProductGalleryVariant = 'popular' | 'catalog';
@@ -10,22 +11,14 @@ interface ProductGalleryProps {
     products: StrapiProduct[];
     className?: string;
     variant?: ProductGalleryVariant;
-    onAddToCart?: (product: StrapiProduct) => void;
-}
-
-function formatPrice(price: number): string {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    }).format(price);
 }
 
 export function ProductGallery({
     products,
     className,
     variant = 'popular',
-    onAddToCart,
 }: ProductGalleryProps) {
+    const addItem = useCartStore((state) => state.addItem);
     if (variant === 'catalog') {
         return (
             <ul
@@ -53,7 +46,7 @@ export function ProductGallery({
                                 }
                                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                                 fallback={
-                                    <div className="h-full w-full bg-slate-300" />
+                                    <div className="h-full w-full bg-muted" />
                                 }
                             />
                         </Link>
@@ -75,7 +68,7 @@ export function ProductGallery({
                                     size="sm"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        onAddToCart?.(product);
+                                        addItem(product);
                                     }}
                                     className="shrink-0 rounded-xs text-xs sm:text-sm"
                                 >
@@ -113,7 +106,7 @@ export function ProductGallery({
                                 }
                                 className="h-full w-full object-cover"
                                 fallback={
-                                    <div className="h-full w-full bg-slate-300" />
+                                    <div className="h-full w-full bg-muted" />
                                 }
                             />
                         </figure>
