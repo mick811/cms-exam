@@ -15,11 +15,11 @@ export function StrapiImage({
     fallback = null,
 }: StrapiImageProps) {
     const src = useMemo(() => {
-        if (!image.url) return null;
+        if (!image?.url) return null;
         return image.url.startsWith('http')
             ? image.url
             : `${import.meta.env.VITE_STRAPI_URL}${image.url}`;
-    }, [image.url]);
+    }, [image?.url]);
 
     if (!src) {
         return <>{fallback}</>;
