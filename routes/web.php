@@ -11,6 +11,8 @@ Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/search/suggest', SearchController::class)->name('search.suggest');
 
+Route::get('/cart', fn () => Inertia::render('cart'))->name('cart');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', fn () => Inertia::render('profile'))->name('profile');
 });

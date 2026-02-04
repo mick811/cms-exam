@@ -27,11 +27,11 @@ en moderne vinyl shop med fuld webshop funktionalitet for samlere og fans af vin
 | home page med hero og featured products                                                                     |   ✓    |
 | products page med grid og filtre                                                                            |   ✓    |
 | product detail page (billede, info, add to cart)                                                            |   ✓    |
-| cart page                                                                                                   |        |
+| cart page                                                                                                   |   ✓    |
 | loading states (skeleton)                                                                                   |   ✓    |
 | error states og fallback ui                                                                                 |        |
 | mobile responsive                                                                                           |   ✓    |
-| empty cart state                                                                                            |        |
+| empty cart state                                                                                            |   ✓    |
 | search funktion                                                                                             |   ✓    |
 | feature test: products page loading                                                                         |        |
 | feature test: cart functionality                                                                            |        |
