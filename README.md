@@ -22,7 +22,7 @@ en moderne vinyl shop med fuld webshop funktionalitet for samlere og fans af vin
 | input, textarea, label components                                                                           |   ✓    |
 | product card (billede, titel, artist, pris, condition)                                                      |   ✓    |
 | filter sidebar (genre, år, pris range)                                                                      |   ✓    |
-| cart drawer component                                                                                       |        |
+| cart drawer component                                                                                       |   ✓    |
 | quantity selector                                                                                           |   ✓    |
 | home page med hero og featured products                                                                     |   ✓    |
 | products page med grid og filtre                                                                            |   ✓    |
