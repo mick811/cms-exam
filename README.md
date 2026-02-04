@@ -40,7 +40,7 @@ en moderne vinyl shop med fuld webshop funktionalitet for samlere og fans af vin
 | kør tests                                                                                                   |   ✓    |
 | build production assets                                                                                     |   ✓    |
 | screenshots                                                                                                 |        |
-| dokumentation                                                                                               |        |
+| dokumentation                                                                                               |   ✓    |
 
 ## setup
 
