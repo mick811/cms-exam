@@ -57,7 +57,7 @@ inertia er en "glue" mellem backend og frontend. når du klikker et link, sender
 | pint fix                                                                                                    |   ✓    |
 | kør tests                                                                                                   |   ✓    |
 | build production assets                                                                                     |   ✓    |
-| screenshots                                                                                                 |        |
+| screenshots                                                                                                 |   ✓    |
 | dokumentation                                                                                               |   ✓    |
 
 ## setup
