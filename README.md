@@ -20,23 +20,17 @@ en moderne vinyl shop med fuld webshop funktionalitet for samlere og fans af vin
 | button component                                                                                            |   ✓    |
 | card component til produkter                                                                                |   ✓    |
 | input, textarea, label components                                                                           |   ✓    |
-| product card (billede, titel, artist, pris, condition)                                                      |        |
+| product card (billede, titel, artist, pris, condition)                                                      |   ✓    |
 | filter sidebar (genre, år, pris range)                                                                      |   ✓    |
 | cart drawer component                                                                                       |        |
-| quantity selector                                                                                           |        |
+| quantity selector                                                                                           |   ✓    |
 | home page med hero og featured products                                                                     |   ✓    |
 | products page med grid og filtre                                                                            |   ✓    |
-| product detail page (billede, info, add to cart)                                                            |        |
+| product detail page (billede, info, add to cart)                                                            |   ✓    |
 | cart page                                                                                                   |        |
-| checkout page (ui only, ingen payment)                                                                      |        |
-| order confirmation page                                                                                     |        |
-| about page                                                                                                  |        |
-| contact page                                                                                                |        |
-| login/register pages                                                                                        |        |
-| profile page med order history                                                                              |        |
 | loading states (skeleton)                                                                                   |   ✓    |
 | error states og fallback ui                                                                                 |        |
-| mobile responsive                                                                                           |        |
+| mobile responsive                                                                                           |   ✓    |
 | empty cart state                                                                                            |        |
 | search funktion                                                                                             |   ✓    |
 | feature test: products page loading                                                                         |        |
