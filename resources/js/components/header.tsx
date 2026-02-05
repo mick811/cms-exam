@@ -34,6 +34,10 @@ export default function Header() {
     return (
         <header className="fixed top-0 right-0 left-0 z-50 bg-sidebar text-sidebar-foreground">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                <Link href="/" prefetch className="md:hidden">
+                    <AppLogoIcon className="size-6 fill-current text-black dark:text-white" />
+                </Link>
+
                 <nav className="hidden items-center gap-6 md:flex">
                     <Link href="/" prefetch>
                         <AppLogoIcon className="size-5 fill-current text-black dark:text-white" />
