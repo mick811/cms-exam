@@ -30,7 +30,7 @@ inertia er en bro mellem backend og frontend. når du klikker et link, sender in
 | hero indholdstype i strapi (billede/video)                                                                  |   ✓    |
 | product indholdstype i strapi (title, artist, genre, year, price, image, sleeve condition, media condition) |   ✓    |
 | genres i strapi (kun til filtrering - name, slug)                                                           |   ✓    |
-| eksempeldata i strapi (10+ produkter, hero)                                                                 |        |
+| eksempeldata i strapi (10+ produkter, hero)                                                                 |   ✓    |
 | strapiservice med hero, products, genres                                                                    |   ✓    |
 | layout component                                                                                            |   ✓    |
 | header component med logo, nav, search, cart icon                                                           |   ✓    |

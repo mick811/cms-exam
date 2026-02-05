@@ -12,7 +12,8 @@
     "pluginOptions": {},
     "attributes": {
         "slug": {
-            "type": "uid"
+            "type": "uid",
+            "targetField": "title"
         },
         "images": {
             "type": "media",
